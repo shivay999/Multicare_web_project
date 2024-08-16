@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doctor Dashboard</title>
+  <link rel="stylesheet" href="patient.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" charset="utf-8"></script>
+  {% block css %}
+
+  {% endblock %}
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Roboto", sans-serif;
+
+    }
+
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 50vh;
+      width: 100%;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .container .box {
+      position: relative;
+      width: 200px;
+      padding: 20px;
+
+    }
+
+    .box {
+      position: relative;
+      width: 300px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+      border-radius: 4px;
+      margin: 20px;
+      left: 120px;
+      margin-top: 90px;
+      height: 30vh;
+      overflow: hidden;
+      text-align: center;
+      background: #ed765e;
+
+    }
+
+    .box:before {
+      content: "";
+      width: 50%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba(255, 255, 255, .2);
+    }
+
+    .box .icon {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      background: #000;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      font-size: 20px;
+      font-weight: 700;
+      border-radius: 50%;
+      transition: 1s;
+    }
+
+    .box .content {
+      position: relative;
+    }
+
+    .box .content h3 {
+      font-size: 20px;
+      margin: 10px 0;
+      margin-top: 15px;
+    }
+
+    .box .content a {
+      display: inline-block;
+      padding: 10px 20px;
+      background: #fff;
+      border-radius: 4px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 500;
+      margin-top: 45px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, .2);
+      background: #0B87A6;
+
+    }
+
+    .container .h3 {
+      left: 100px;
+      color: #ed765e;
+    }
+
+    div.b {
+      margin-left: 280px;
+      margin-top: 100px;
+      color: gray;
+    }
+
+
+
+    header {
+      z-index: 1;
+      position: fixed;
+      background: #4b086d;
+      padding: 20px;
+      width: calc(100% - 0%);
+      top: 0;
+      height: 30px;
+    }
+
+    .left_area h3 {
+      color: #fff;
+      margin: 0;
+      text-transform: uppercase;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .left_area span {
+      color: #19B3D3;
+    }
+
+    .sidebar {
+      z-index: 1;
+      top: 0;
+      background: #ed765e;
+      margin-top: 70px;
+      padding-top: 30px;
+      position: fixed;
+      left: 0;
+      width: 250px;
+      height: calc(100% - 9%);
+      transition: 0.5s;
+      transition-property: left;
+      overflow-y: auto;
+    }
+
+    .profile_info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sidebar .profile_info .profile_image {
+      width: 100px;
+      height: 100px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+
+    .sidebar .profile_info h4 {
+      color: #ccc;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      display: block;
+      width: 100%;
+      line-height: 60px;
+      text-decoration: none;
+      padding-left: 40px;
+      box-sizing: border-box;
+      transition: 0.5s;
+      transition-property: background;
+    }
+
+    .sidebar a:hover {
+      background: #19B3D3;
+    }
+
+    .sidebar i {
+      padding-right: 10px;
+    }
+
+    label #sidebar_btn {
+      z-index: 1;
+      color: #fff;
+      position: fixed;
+      cursor: pointer;
+      left: 300px;
+      font-size: 20px;
+      margin: 5px 0;
+      transition: 0.5s;
+      transition-property: color;
+    }
+
+    label #sidebar_btn:hover {
+      color: #19B3D3;
+    }
+
+    #check:checked~.sidebar {
+      left: -185px;
+    }
+
+    #check:checked~.sidebar a span {
+      display: none;
+    }
+
+    #check:checked~.sidebar a {
+      font-size: 20px;
+      margin-left: 165px;
+      width: 100%;
+    }
+
+
+    #check:checked~.content {
+      margin-left: 60px;
+    }
+
+    #check:checked~.sidebar .profile_info {
+      display: none;
+    }
+
+    #check {
+      display: none;
+    }
+
+    .mobile_nav {
+      display: none;
+    }
+
+    .content .card p {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* Logout btn */
+
+    .navbar .nav_right>ul {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .nav_right ul li.nr_li {
+      margin-left: 1100px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 15px;
+      position: relative;
+      margin-top: -50px;
+    }
+
+    .navbar .nav_right ul li.nr_li:hover {
+      color: #cefffc;
+    }
+
+
+    .navbar .dd_menu {
+      position: absolute;
+      right: 15px;
+      top: 47px;
+      display: flex;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.25);
+      display: none;
+    }
+
+    .navbar .dd_menu .dd_left {
+      background: #74ded8;
+      padding: 11px 16px;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      width: 20px;
+
+    }
+
+    .navbar .dd_menu .dd_left li {
+      color: #fff;
+      padding: 15px 20px;
+      margin-left: -60px;
+
+    }
+
+    .navbar .dd_menu .dd_right li {
+      padding: 10px 15px;
+      margin-left: -20px;
+    }
+
+    .navbar .dd_menu .dd_right {
+      padding: 10px 15px;
+    }
+
+    .navbar .dd_menu li {
+      margin-bottom: 10px;
+      color: #868686;
+    }
+
+    .navbar .dd_menu:before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      right: 30px;
+      border: 10px solid;
+      border-color: transparent transparent #fff transparent;
+    }
+
+    .navbar .dd_main.active .dd_menu {
+      display: flex;
+    }
+
+    .nav_right {
+      display: flex;
+      flex-wrap: wrap;
+      z-index: -1;
+    }
+
+
+    /* Dropdown Logout button */
+
+    .mobile_nav_items {
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    .mobile_nav_items .dropdown-content a {
+      font-size: 16px;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      line-height: 30px;
+    }
+
+    .dropdown {
+      overflow: hidden;
+      text-align: center;
+    }
+
+
+    .dropdown .dropbtn {
+      font-size: 16px;
+      border: none;
+      outline: none;
+      color: white;
+      padding: 14px 16px;
+      background-color: inherit;
+      font-family: inherit;
+      margin: 0;
+      text-align: center;
+
+    }
+
+    .mobile_nav_items a:hover,
+    .dropdown:hover .dropbtn {
+      background-color: red;
+    }
+
+    .dropdown-content {
+      display: none;
+      background: #2F323A;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      float: none;
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      text-align: left;
+    }
+
+    .dropdown-content a:hover {
+      background-color: #ddd;
+    }
+
+    .dropdown:hover .dropdown-content {
+      display: block;
+    }
+
+
+
+
+    .logout_btn {
+      padding: 5px;
+      background: #19B3D3;
+      text-decoration: none;
+      float: right;
+      margin-top: -5px;
+      margin-right: 40px;
+      border-radius: 2px;
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+      transition: 0.5s;
+      transition-property: background;
+    }
+
+    .logout_btn:hover {
+      background: #0B87A6;
+    }
+
+
+    /* Responsive CSS */
+
+    @media screen and (max-width: 780px) {
+      .sidebar {
+        display: none;
+      }
+
+      #sidebar_btn {
+        display: none;
+      }
+
+      #check:checked~.content {
+        margin-left: 0;
+      }
+
+      .mobile_nav {
+        display: block;
+        width: calc(100% - 0%);
+      }
+
+      .nav_bar {
+        background: #222;
+        width: (100% - 0px);
+        margin-top: 70px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+      }
+
+      .nav_bar .profile_image1 {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      .profile_name1 {
+        color: #ccc;
+      }
+
+      .nav_bar .nav_btn {
+        color: #fff;
+        font-size: 22px;
+        cursor: pointer;
+        transition: 0.5s;
+        transition-property: color;
+      }
+
+      div.b {
+        margin-left: 35px;
+        margin-top: 100px;
+        color: gray;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50vh;
+        width: 100%;
+        flex-wrap: wrap;
+        margin-top: -30px;
+        margin-left: -120px;
+        border-bottom: 20px;
+      }
+
+      .nav_right {
+        display: none;
+      }
+
+      .dd_menu {
+        margin-right: 20px;
+        z-index: -1;
+
+      }
+
+      .nav_bar .nav_btn:hover {
+        color: #19B3D3;
+      }
+
+      .mobile_nav_items {
+        background: #2F323A;
+        display: none;
+      }
+
+      .mobile_nav_items a {
+        color: #fff;
+        display: block;
+        text-align: center;
+        letter-spacing: 1px;
+        line-height: 60px;
+        text-decoration: none;
+        box-sizing: border-box;
+        transition: 0.5s;
+        transition-property: background;
+      }
+
+      .mobile_nav_items a:hover {
+        background: #19B3D3;
+      }
+
+      .mobile_nav_items i {
+        padding-right: 10px;
+      }
+
+      .active {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  {% load static%}
+
+  <input type="checkbox" id="check">
+  <!--header area start-->
+  <div class="navbar">
+    <header>
+      <label for="check">
+        <i class="fas fa-bars" id="sidebar_btn"></i>
+      </label>
+      <div class="left_area">
+        <h3>Aboli <span>Hospital</span></h3>
+      </div>
+      <div class="nav_right">
+        <ul>
+          <li class="nr_li dd_main">
+            <a class="logout_btn">Doctor</a>
+
+            <div class="dd_menu">
+              <div class="dd_left">
+                <ul>
+                  <li><i class="far fa-star"></i></li>
+                  <li><i class="far fa-plus-square"></i></li>
+                  <li><i class="fas fa-sign-out-alt"></i></li>
+                </ul>
+              </div>
+              <div class="dd_right">
+                <ul>
+                  <li> <a href="{% url 'updateprofile' %}">Update Profile</a></li>
+                  <li> <a href="{% url 'change_password' %}">Change Password</a></li>
+                  <li> <a href="{% url 'logoutpg' %}">Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+          <li class="nr_li">
+            <i class="fas fa-envelope-open-text"></i>
+          </li>
+        </ul>
+      </div>
+    </header>
+  </div>
+  <!--header area end-->
+  <!--mobile navigation bar start-->
+
+  <div class="mobile_nav">
+    <div class="nav_bar">
+
+      {% for d in doctor_details%}
+      {%if d.profileimg %}
+      <img src="{{d.profileimg.url}}" class="profile_image1" alt="">
+      {% else %}
+      <img src="{%static 'img/default-pic.jpg'%}" class="profile_image1" alt="gotta">
+      {%endif%}
+      <h4 class="profile_name1">DR . {{d.name}}</h4>
+      {% endfor %}
+
+      <i class="fa fa-bars nav_btn"></i>
+    </div>
+    <div class="mobile_nav_items">
+      <a href="{% url 'patientdash'%}"><i class="fas fa-desktop"></i><span>Home</span></a>
+      <a href="{% url 'patientprofile'%}"><i class="fas fa-cogs"></i><span>Profile</span></a>
+      <a href="{% url 'viewappointments'%}"><i class="fas fa-th"></i><span>View Appointment</span></a>
+      <a href="{% url 'patienthistory'%}"><i class="fas fa-table"></i><span>View Patient History</span></a>
+      <div class="dropdown">
+        <button class="dropbtn">Doctor
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="{% url 'updateprofile' %}">Update Profile</a>
+          <a href="{% url 'change_password' %}">Change Password</a>
+          <a href="{% url 'logoutpg' %}">Logout</a>
+
+          <!-- <a href="#">Link 2</a>
+            <a href="#">Link 3</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--mobile navigation bar end-->
+  <!--sidebar start-->
+  <div class="sidebar">
+    <div class="profile_info">
+      <h4 style="color: black;">Doctor Panel</h4>
+      {% for d in doctor_details%}
+      {%if d.profileimg %}
+      <img src="{{d.profileimg.url}}" class="profile_image" alt="">
+      {% else %}
+      <img src="{%static 'img/default-pic.jpg'%}" class="profile_image" alt="gotta">
+      {%endif%}
+
+      <h4 class="profile_name1">DR. {{d.name}}</h4>
+      {% endfor %}
+    </div>
+    <a href="{% url 'patientdash'%}"><i class="fas fa-desktop"></i><span>Home</span></a>
+    <a href="{% url 'patientprofile'%}"><i class="fas fa-cogs"></i><span>Profile</span></a>
+
+    <a href="{% url 'viewappointments'%}"><i class="fas fa-th"></i><span>View Appointment</span></a>
+    <a href="{% url 'patienthistory'%}"><i class="fas fa-history"></i><span>Patient Hiistory</span></a>
+  </div>
+
+  <!--sidebar end-->
+  {% block body_block%}
+  <div class="b">
+    <h1>USER | DASHBOARD</h1>
+    <hr style="height: 3px; border-width: 0; color: gray; background-color: gray; margin-right: 30px;">
+  </div>
+  <div class="container">
+    <div class="box">
+      <div class="icon">01</div>
+      <div class="content">
+        <h3>My Profile</h3>
+        <a href="{% url 'patientprofile'%}">Update Profile</a>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="icon">02</div>
+      <div class="content">
+        <h3>View Appointments</h3>
+        <a href="{% url 'viewappointments'%}">View Appointment History</a>
+      </div>
+    </div>
+
+    <div class="box">
+      <div class="icon">03</div>
+      <div class="content">
+        <h3>View Patient History</h3>
+        <a href="{% url 'patienthistory'%}">History</a>
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
+  <script type="text/javascript">
+    $(document).ready(function () {
+      $('.nav_btn').click(function () {
+        $('.mobile_nav_items').toggleClass('active');
+      });
+    });
+  </script>
+
+  <script>
+    var dd_main = document.querySelector(".dd_main");
+
+    dd_main.addEventListener("click", function () {
+      this.classList.toggle("active");
+    })
+  </script>
+
+
+</body>
+
+</html>

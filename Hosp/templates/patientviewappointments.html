@@ -1,0 +1,168 @@
+{% extends 'patientinfo.html' %}
+{% load static %}
+{% block title %}
+<title>View Appointments</title>
+{% endblock %}
+{% block css %}
+<style>
+  .table-box {
+    margin: 50px auto;
+    margin-left: 250px;
+  }
+
+  .table-row {
+    display: table;
+    width: 90%;
+    margin: 10px auto;
+    font-family: sans-serif;
+    background: transparent;
+    padding: 12px 0;
+    color: #555;
+    font-size: 13px;
+    box-shadow: 0 1px 4px 0px rgba(0, 0, 50, 0.3);
+  }
+
+  .table-head {
+    background: #8665f7;
+    box-shadow: none;
+    color: #fff;
+    font-weight: 600;
+  }
+
+  .table-head .table-cell {
+    border-right: none;
+  }
+
+  .table-cell {
+    display: table-cell;
+    width: 15%;
+    text-align: center;
+    padding: 4px 0;
+    border-right: 1px solid #d6d4d4;
+    vertical-align: middle;
+  }
+
+  .first-cell {
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  .last-cell {
+    border-right: none;
+  }
+
+  a {
+    text-decoration: none;
+    color: #555;
+  }
+
+  div.b {
+    margin-left: 25%;
+    margin-top: 10%;
+    color: gray;
+  }
+
+
+  .pres:link,
+  .pres:visited {
+    background-color: #90EE90;
+    color: white;
+    padding: 14px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .pres:hover,
+  .pres:active {
+    background-color: darkgreen;
+  }
+
+
+  @media only screen and (max-width: 600px) {
+    .table-row {
+      font-size: 11px;
+      width: 99%;
+    }
+
+    .table-box {
+      overflow-x: scroll;
+      margin-left: 0;
+      padding: 0 10px 0 10px;
+    }
+
+    div.b {
+      margin-left: 5%;
+      margin-top: 0;
+    }
+  }
+</style>
+{% endblock %}
+{% block body_block%}
+<div class="content">
+  <div class="col-md-8 offset-md-2">
+    <div class="b">
+      <h1>USER | APPOINTMENT HISTORY</h1>
+      <hr style="height: 3px; border-width: 0; color: gray; background-color: gray; margin-right: 30px;">
+    </div>
+    <div class="table-box">
+      <div class="table-row table-head">
+        <div class="table-cell first-cell">
+          <p>Doctor Name</p>
+        </div>
+        <div class="table-cell">
+          <p>Patient Gender</p>
+        </div>
+        <div class="table-cell">
+          <p>Appointment Date</p>
+        </div>
+        <div class="table-cell">
+          <p>Appointemnt Time</p>
+        </div>
+        <div class="table-cell">
+          <p>Symptoms</p>
+        </div>
+        <div class="table-cell last-cell">
+          <p>Status</p>
+        </div>
+        <div class="table-cell">
+          <p>Action</p>
+        </div>
+      </div>
+
+      {% for i in stu %}
+
+      <div class="table-row">
+        <div class="table-cell first-cell">
+          <p>DR {{i.doctorname}}</p>
+        </div>
+        <div class="table-cell">
+          <p>{{i.gender}}</p>
+        </div>
+        <div class="table-cell">
+          <p>{{i.appointmentdate}}</p>
+        </div>
+        <div class="table-cell">
+          <p>{{i.appointmenttime}}</p>
+        </div>
+        <div class="table-cell">
+          <p>{{i.symptoms}}</p>
+        </div>
+        <div class="table-cell">
+          <p>{{i.status}}</p>
+        </div>
+
+        <div class="table-cell last-cell">
+          <a href="{% url 'patient_delete_appointment' i.id %} "
+            onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger pres">Delete</a>
+        </div>
+      </div>
+      {% endfor %}
+      </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

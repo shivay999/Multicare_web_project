@@ -1,0 +1,148 @@
+{% extends 'temp3.html' %}
+{% load static %}
+{% block title %}
+<title>Doctor Appointment</title>
+
+{% endblock%}
+{% block css %}
+<style>
+  .data {
+    margin-bottom: 15%;
+  }
+
+  table {
+    width: 90%;
+    margin-left: 37px;
+    margin: 50px auto;
+  }
+
+  .table-cell {
+    display: table-cell;
+    width: 15%;
+    text-align: center;
+    padding: 4px 0;
+    border-right: 1px solid #d6d4d4;
+    vertical-align: middle;
+  }
+
+  .first-cell {
+    text-align: left;
+    padding-left: 10px;
+  }
+
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #dddddd;
+  }
+
+  .pres:link,
+  .pres:visited {
+    background-color: #90EE90;
+    color: white;
+    padding: 14px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .pres:hover,
+  .pres:active {
+    background-color: darkgreen;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .table-row {
+      font-size: 11px;
+    }
+
+    .table-box {
+      overflow-x: scroll;
+
+    }
+
+    .slidee {
+      overflow-x: scroll;
+    }
+  }
+</style>{% endblock %}
+{% block body_block%}
+
+<div class="content">
+  <div class="col-md-8 offset-md-2">
+    <div class="b">
+      <h1>USER | VIEW APPOINTMENT</h1>
+      <hr style="height: 3px; border-width: 0; color: gray; background-color: gray; margin-right: 30px;">
+    </div>
+    <div class="data">
+      <div class="slidee">
+        <table id="example">
+          <thead>
+            <tr>
+              <th class="table-cell first-cell">Patient Name</th>
+              <th class="table-cell">Patient Gender</th>
+              <th class="table-cell">Appointemnt Date</th>
+              <th class="table-cell">Appointemnt Time</th>
+              <th class="table-cell">Stmptoms</th>
+              <th class="table-cell">Status</th>
+              <th class="table-cell">Prescription</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in stu %}
+
+            <tr>
+              <td class="table-cell">{{i.username}}</td>
+              <td class="table-cell">{{i.gender}}</td>
+              <td class="table-cell">{{i.appointmentdate}}</td>
+              <td class="table-cell">{{i.appointmenttime}}</td>
+              <td class="table-cell">{{i.symptoms}}</td>
+              <td class="table-cell">{{i.status}}</td>
+              <td class="table-cell"><a href="{% url 'add_prescrip' i.id %}" class="pres"> Add Prescription</a>
+
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+{% endblock %}
+
+{% block js%}
+<link rel="stylesheet" type="text/css"
+  href="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.6.1/r-2.2.7/rg-1.1.2/rr-1.2.7/sl-1.3.1/datatables.min.css" />
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.23/af-2.3.5/b-1.6.5/b-colvis-1.6.5/b-html5-1.6.5/b-print-1.6.5/cr-1.5.3/fc-3.3.2/kt-2.6.1/r-2.2.7/rg-1.1.2/rr-1.2.7/sl-1.3.1/datatables.min.js"></script>
+
+<script>
+  $(document).ready(function () {
+    $('#example').DataTable({
+
+      dom: 'B<"clear">lfrtip',
+      buttons: {
+        name: 'primary',
+        buttons: ['copy', 'csv', 'excel', 'pdf']
+
+      }
+    }
+    );
+  });
+</script>
+
+
+{% endblock%}

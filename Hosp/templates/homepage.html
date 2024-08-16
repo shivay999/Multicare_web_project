@@ -1,0 +1,352 @@
+{% extends 'basic.html' %}
+{% block title %}homepage {% endblock %}
+{% load static %}
+{% block css %}
+<style>
+  * {
+    margin: 0;
+    padding: o;
+    font-family: sans-serif;
+  }
+
+  .container1 {
+    width: 100%;
+    min-height: 100vh;
+    padding-left: 8%;
+    padding-right: 8%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .row2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 100px 0;
+  }
+
+  .col-1 {
+    flex-basis: 40%;
+    position: relative;
+    margin-left: 50px;
+  }
+
+  .col-1 h2 {
+    font-size: 54px;
+  }
+
+  .col-1 h3 {
+    font-size: 20px;
+    color: #707070;
+    font-weight: 100;
+    margin: 20px 0 20px;
+  }
+
+  .button {
+    width: 140px;
+    border: 0;
+    padding: 12px 10px;
+    outline: none;
+    color: #fff;
+    background: linear-gradient(to right, #fb5283, #ff3527);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: width 0.5s;
+  }
+
+  button:hover {
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .col-1::after {
+    content: '';
+    width: 10px;
+    height: 57%;
+    background: linear-gradient(#ff469f, #ff6062);
+    position: absolute;
+    left: -40px;
+    top: 8px;
+  }
+
+  .col-2 {
+    position: relative;
+    flex-basis: 60%;
+    display: flex;
+    align-items: center;
+  }
+
+  .col-2 .controller {
+    width: 60%;
+    margin-top: -100px;
+    margin-left: 100px;
+  }
+
+
+  @media only screen and (max-width:700px) {
+
+    .menu-icon {
+      display: block;
+    }
+
+    #menuList {
+      overflow: hidden;
+      transition: 0.5s;
+    }
+
+    .row2 {
+      flex-direction: column-reverse;
+      margin: 50px 0;
+    }
+
+    .col-2 {
+      flex-basis: 100%;
+      margin-bottom: 50px;
+    }
+
+    .col-2 .controller {
+      width: 77%;
+    }
+
+    .col-1 {
+      flex-basis: 100%;
+    }
+
+    .col-1 h2 {
+      font-size: 35px;
+    }
+
+    .col-1 h3 {
+      font-size: 15px;
+    }
+  }
+
+
+
+  /* FOOTER */
+
+  body {
+    display: grid;
+    justify-content: end;
+    align-content: end;
+    min-height: 100vh;
+  }
+
+  footer {
+    position: relative;
+    height: auto;
+    padding: 50px 100px;
+    background: #303036;
+  }
+
+  footer .container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    grid-gap: 20px;
+  }
+
+  footer .container .sec h2 {
+    position: relative;
+    color: #fff;
+    font-weight: 15px;
+  }
+
+  footer .container .sec h2::before {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #ffeb3b;
+  }
+
+  footer .container .sec p {
+    color: #fff;
+  }
+
+  .sci {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 50px);
+    grid-gap: 10px;
+  }
+
+  .sci li {
+    list-style: none;
+  }
+
+  .sci li a {
+    display: inline-block;
+    width: 48px;
+    height: 48px;
+    background: black;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    text-decoration: none;
+    border-radius: 4px;
+  }
+
+  .sci li a:hover {
+    background-color: burlywood;
+  }
+
+  .sci li a .fa {
+    color: #fff;
+    font-size: 20px;
+  }
+
+  .quicklinks {
+    position: relative;
+  }
+
+  .quicklinks li {
+    list-style: none;
+    padding: 10px;
+  }
+
+  .quicklinks li a {
+    color: #f7f7f7;
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  .quicklinks li a:hover {
+    color: #ffeb3b;
+  }
+
+  .info li {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    margin-bottom: 50px;
+  }
+
+  .info li span:nth-child(1) {
+    color: #fff;
+    font-size: 20px;
+  }
+
+  .info li span {
+    color: #fff;
+  }
+
+  .info a {
+    color: #fff;
+    text-decoration: none;
+    margin-top: 20px;
+  }
+
+  .info a:hover {
+    color: #ffeb3b;
+  }
+
+  .copyrightText {
+    background: #343a40;
+    color: #686868;
+    padding: 8px 100px;
+    text-align: center;
+  }
+
+  /* Responsive footer */
+  @media (max-width: 991px) {
+    footer {
+      padding: 40px;
+    }
+
+    footer .container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .copyrightText {
+      padding: 8px 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    footer .container {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+</style> {% endblock %}
+
+{% block body %}
+
+<!-- LANDING PAGE -->
+
+<div class="container1">
+  <div class="row2">
+    <div class="col-1">
+      <h2>MAKING <br>HEALTHCARE SIMPLE</h2>
+      <h3>Aboli Hospital Management Services <br> We are always here to help you.</h3>
+      <a class="button" href="{% url 'makeappointments'%}">Make Appointment</a>
+    </div>
+    <div class="col-2">
+      <img src="{%static 'img/bg.png'%}" class="controller">
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="container">
+    <div class="sec aboutus">
+      <h2>Aboli Hospital</h2>
+      <p style="margin-top: 20px;">
+        The main motive of this website is to provide a relaible service to our users with guranteed privacy.
+        This website holds the detials of the patient to book their appointment.
+      </p>
+      <ul class="sci">
+        <li><a href="https://www.facebook.com/amit.nilekar.9"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+        <li><a href=""><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+        <li><a href=""><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+        <li><a href=""><i class="fa fa-youtube-play" aria-hidden="true"></i></a></li>
+      </ul>
+    </div>
+    <div class="sec quicklinks">
+      <h2>Quick Links</h2>
+      <ul>
+        <li><a href="">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="#">Terms and Conditions</a></li>
+      </ul>
+    </div>
+    <div class="sec quicklinks">
+      <h2>Connect</h2>
+      <ul>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/createAcc">Sign up</a></li>
+      </ul>
+    </div>
+
+    <div class="sec contact">
+      <h2>Contact us</h2>
+      <ul class="info">
+        <li style="margin-top: 20px;">
+          <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+          <span>Shivaji Nagar <br> Parbhani-431401,<br>INDIA.</span>
+        </li>
+
+        <li style="margin-top: -30px;">
+          <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+          <p><a href="tel:+12345678900">02452225818</a></p>
+        </li>
+
+        <li style="margin-top: -30px;">
+          <span><i class="fa fa-envelope" aria-hidden="true"></i></span>
+          <p><a href="mailto:info@awainspires.com">info@awainspires.com</a></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<!-- footer End -->
+
+<div class="copyrightText">
+  <p> &copy; DBATUCE2020G12 | Designed by The Superlatives</p>
+</div>
+<script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+
+{% endblock %}
